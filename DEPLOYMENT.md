@@ -40,3 +40,25 @@ voila app.ipynb --port=$PORT --no-browser --Voila.ip=0.0.0.0
 - `investor_rules.json` is file-based state. Some hosts use ephemeral filesystems, so data may reset on redeploy/restart.
 - For persistence, move rules to a database or external storage.
 - The current login is UI-only (no secure auth backend). Add proper authentication before public production use.
+
+
+## 4) If your host is using Docker builds
+
+If your deploy logs show an error like:
+
+```text
+failed to read dockerfile: open Dockerfile: no such file or directory
+```
+
+your platform is attempting a Docker build. This repository now includes a `Dockerfile`.
+
+- Ensure your service is configured to use the **repo root** as the build context.
+- Keep `Dockerfile` at the root of the repo.
+- Re-deploy after pushing the latest commit.
+
+The Docker image starts Voila with:
+
+```bash
+voila app.ipynb --port=${PORT} --no-browser --Voila.ip=0.0.0.0
+```
+
